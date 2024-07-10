@@ -1,0 +1,21 @@
+{
+    "id": 1,
+    "guid": "d761f6d7-75ff-4776-8d38-96e2e88f44fd",
+    "isEnabled": true,
+    "createdBy": "Admin",
+    "updatedBy": "Admin",
+    "createTime": 1706429824315,
+    "updateTime": 1706429841453,
+    "version": 1,
+    "type": "trino",
+    "name": "trino",
+    "displayName": "trino",
+    "configs": {
+      "jdbc.driverClassName": "io.trino.jdbc.TrinoDriver",
+      "jdbc.url": "jdbc:trino://localhost-trino:8080",
+      "username": "ranger-admin",
+      "password": "ranger-admin"
+    },
+    "policyVersion": 1,
+    "policyUpdateTime": 1706429824622
+  }

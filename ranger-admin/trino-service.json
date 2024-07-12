@@ -4,8 +4,6 @@
     "isEnabled": true,
     "createdBy": "Admin",
     "updatedBy": "Admin",
-    "createTime": 1706429824315,
-    "updateTime": 1706429841453,
     "version": 1,
     "type": "trino",
     "name": "trino",
@@ -13,9 +11,6 @@
     "configs": {
       "jdbc.driverClassName": "io.trino.jdbc.TrinoDriver",
       "jdbc.url": "jdbc:trino://localhost-trino:8080",
-      "username": "ranger-admin",
-      "password": "ranger-admin"
-    },
-    "policyVersion": 1,
-    "policyUpdateTime": 1706429824622
+      "username": "ranger-admin"
+    }
   }

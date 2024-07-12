@@ -23,12 +23,11 @@ services:
     volumes:
     - ranger-pg-data:/var/lib/postgresql/data
   ranger-admin:
-    build:
-      context: ranger-admin
+    build: 
+      context: ./ranger-admin
       dockerfile: Dockerfile
     container_name: ranger-admin
     hostname: ranger-admin
-    entrypoint: /root/ranger-admin/docker-entrypoint.sh
     deploy:
       resources:
         limits:
@@ -39,17 +38,13 @@ services:
           memory: 5G
     ports:
       - 6080:6080
-    volumes:
-      - ./ranger-admin:/root/ranger-admin
   trino:
-    image: trinodb/trino:451
+    build: 
+      context: ./trino
+      dockerfile: Dockerfile
     hostname: localhost-trino
     user: root
     container_name: localhost-trino
-    entrypoint: /root/docker-entrypoint.sh
-    volumes:
-      - ./trino/install.properties:/root/install.properties
-      - ./trino/docker-entrypoint.sh:/root/docker-entrypoint.sh
     ports:
       - 8080:8080
 volumes:

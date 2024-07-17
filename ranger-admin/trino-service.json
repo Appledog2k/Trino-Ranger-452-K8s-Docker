@@ -11,6 +11,7 @@
     "configs": {
       "jdbc.driverClassName": "io.trino.jdbc.TrinoDriver",
       "jdbc.url": "jdbc:trino://localhost-trino:8080",
-      "username": "ranger-admin"
+      "username": "ranger-admin",
+      "password": "123456789"
     }
   }

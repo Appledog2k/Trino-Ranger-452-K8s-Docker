@@ -7,7 +7,8 @@ services:
     environment:
       discovery.type: single-node
       xpack.security.enabled: "false"
-      ES_JAVA_OPTS: -Xms500m -Xmx500m
+      bootstrap.memory_lock: true
+      ES_JAVA_OPTS: -Xms512m -Xmx512m
     ports:
       - 9200:9200
     volumes:
@@ -47,6 +48,7 @@ services:
     container_name: localhost-trino
     ports:
       - 8080:8080
+      - 8443:8443
 volumes:
   ranger-es-data:
   ranger-pg-data:

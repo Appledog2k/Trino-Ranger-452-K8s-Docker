@@ -3,7 +3,7 @@ FROM phusion/baseimage:jammy-1.0.4
 ENV TZ=Asia/Ho_Chi_Minh
 ENV RANGER_VERSION=2.4.0
 ENV TAR_FILE=ranger-${RANGER_VERSION}-admin.tar.gz
-ENV DOWNLOAD_URL=https://github.com/gympass/apache-ranger/releases/download/plugin-trino-451/${TAR_FILE}
+ENV DOWNLOAD_URL=https://github.com/gympass/apache-ranger/releases/download/plugin-trino-452/${TAR_FILE}
 
 COPY install.properties /root/ranger-admin/install.properties
 COPY requirement.txt /root/ranger-admin/requirement.txt
@@ -48,6 +48,7 @@ COPY entrypoint.sh /root/ranger-admin/entrypoint.sh
 
 RUN chmod +x /root/ranger-admin/entrypoint.sh
 
+EXPOSE 6080
+
 ENTRYPOINT ["/root/ranger-admin/entrypoint.sh"]
 
-EXPOSE 6080

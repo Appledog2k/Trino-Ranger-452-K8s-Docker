@@ -1,0 +1,52 @@
+version: '3.7'
+
+services:
+  ranger-admin:
+    build:
+      context: ./ranger-admin
+      dockerfile: Dockerfile
+    container_name: ranger-admin
+    hostname: ranger-admin
+    ports:
+      - 6080:6080
+    depends_on:
+      - postgresql
+      - ranger-solr
+
+  postgresql:
+    image: postgres:13
+    container_name: psql01
+    hostname: psql01
+    environment:
+      POSTGRES_PASSWORD: "postgres"
+    ports:
+      - 5432:5432
+    volumes:
+    - ranger-pg-data:/var/lib/postgresql/data
+
+  ranger-solr:
+    image: solr:8.11.2
+    container_name: ranger-solr
+    ports:
+      - 8983:8983
+    volumes:
+      - ./ranger-solr:/opt/solr/server/solr/configsets/ranger_audits/conf
+    entrypoint:
+      - solr-precreate
+      - ranger_audits
+      - /opt/solr/server/solr/configsets/ranger_audits
+
+  trino:
+    build:
+      context: ./trino
+      dockerfile: Dockerfile
+    image: ranger-trino:latest
+    hostname: ranger-trino
+    container_name: ranger-trino
+    stdin_open: true
+    tty: true
+    ports:
+      - 8080:8080
+
+volumes:
+  ranger-pg-data:

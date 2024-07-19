@@ -1,5 +1,8 @@
 #!/bin/bash
 
+# Wait for PostgreSQL becomes available
+sleep 30
+
 RANGER_VERSION=2.4.0
 
 cd /root/ranger-${RANGER_VERSION}-admin/ && \

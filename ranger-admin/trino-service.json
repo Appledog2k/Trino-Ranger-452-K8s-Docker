@@ -10,7 +10,7 @@
     "displayName": "trino",
     "configs": {
       "jdbc.driverClassName": "io.trino.jdbc.TrinoDriver",
-      "jdbc.url": "jdbc:trino://localhost-trino:8080",
+      "jdbc.url": "jdbc:trino://ranger-trino:8080",
       "username": "ranger-admin"
     }
   }

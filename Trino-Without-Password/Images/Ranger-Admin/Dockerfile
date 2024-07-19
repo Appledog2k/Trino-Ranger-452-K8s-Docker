@@ -31,10 +31,9 @@ RUN apt-get update && apt-get install -y \
     apt-get clean
 
 ENV DEBIAN_FRONTEND noninteractive
+ENV JAVA_HOME=/usr/lib/jvm/zulu11
 
 WORKDIR /root
-
-ENV JAVA_HOME=/usr/lib/jvm/zulu11
 
 # Download and extract Ranger Admin
 RUN wget -O /root/postgresql.jar https://jdbc.postgresql.org/download/postgresql-42.2.23.jar && \
@@ -45,8 +44,10 @@ RUN wget -O /root/postgresql.jar https://jdbc.postgresql.org/download/postgresql
     find /root -type f -exec dos2unix {} \;
 
 # Entry point
-COPY docker-entrypoint.sh /root/ranger-admin/docker-entrypoint.sh
+COPY entrypoint.sh /root/ranger-admin/entrypoint.sh
 
-RUN chmod +x /root/ranger-admin/docker-entrypoint.sh
+RUN chmod +x /root/ranger-admin/entrypoint.sh
 
-ENTRYPOINT ["/root/ranger-admin/docker-entrypoint.sh"]
+ENTRYPOINT ["/root/ranger-admin/entrypoint.sh"]
+
+EXPOSE 6080

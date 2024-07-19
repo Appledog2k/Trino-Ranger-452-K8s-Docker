@@ -7,8 +7,7 @@ services:
     environment:
       discovery.type: single-node
       xpack.security.enabled: "false"
-      bootstrap.memory_lock: true
-      ES_JAVA_OPTS: -Xms512m -Xmx512m
+      ES_JAVA_OPTS: -Xms500m -Xmx500m
     ports:
       - 9200:9200
     volumes:
@@ -25,7 +24,7 @@ services:
     - ranger-pg-data:/var/lib/postgresql/data
   ranger-admin:
     build: 
-      context: ./ranger-admin
+      context: images/ranger-admin
       dockerfile: Dockerfile
     container_name: ranger-admin
     hostname: ranger-admin
@@ -41,14 +40,13 @@ services:
       - 6080:6080
   trino:
     build: 
-      context: ./trino
+      context:  images/trino
       dockerfile: Dockerfile
     hostname: localhost-trino
     user: root
     container_name: localhost-trino
     ports:
       - 8080:8080
-      - 8443:8443
 volumes:
   ranger-es-data:
   ranger-pg-data:

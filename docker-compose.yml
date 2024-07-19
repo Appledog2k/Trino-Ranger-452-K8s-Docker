@@ -5,6 +5,7 @@ services:
     build:
       context: ./ranger-admin
       dockerfile: Dockerfile
+    image: ranger-admin:latest
     container_name: ranger-admin
     hostname: ranger-admin
     ports:

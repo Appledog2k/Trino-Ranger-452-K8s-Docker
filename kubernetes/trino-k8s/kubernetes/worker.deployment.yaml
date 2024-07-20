@@ -1,0 +1,44 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: trino-worker-dev
+  name: trino-worker-dev
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: trino-worker-dev
+  template:
+    metadata:
+      labels:
+        app: trino-worker-dev
+    spec:
+      containers:
+        image: trinodb/trino:448
+        imagePullPolicy: IfNotPresent
+        name: trino-worker-dev
+        ports:
+        - containerPort: 8080
+          name: http
+          protocol: TCP
+        resources: 
+          limits:
+            cpu: 1000m
+            memory: 2Gi
+        volumeMounts:
+        - mountPath: /etc/trino
+          name: config-volume
+        - mountPath: /etc/trino/catalog
+          name: catalog-volume
+      securityContext: 
+        runAsUser: 0
+      volumes:
+      - configMap:
+          defaultMode: 420
+          name: trino-worker-dev-config-volume
+        name: config-volume
+      - configMap:
+          defaultMode: 420
+          name: trino-catalog-dev-config-volume
+        name: catalog-volume

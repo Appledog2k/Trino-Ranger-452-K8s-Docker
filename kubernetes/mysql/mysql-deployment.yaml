@@ -1,0 +1,65 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: mysql-custom-config
+data:
+  mysql.custom.conf: |
+    [mysqld]
+    log_bin_trust_function_creators=1
+    default_authentication_plugin=mysql_native_password
+  #https://dev.to/yoshiyukikato/tips-to-use-mysql-80-on-kubernetes-m3l
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: ranger-mysql
+spec:
+  ports:
+    - name: tcp
+      port: 3306
+      protocol: TCP
+      targetPort: 3306
+  selector:
+    app: mysql
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: mysql
+spec:
+  selector:
+    matchLabels:
+      app: mysql
+  template:
+    metadata:
+      labels:
+        app: mysql
+    spec:
+      containers:
+      - image: mysql:8.0.26
+        name: mysql
+        env:
+          # Use secret in real usage
+        - name: MYSQL_ROOT_PASSWORD
+          value: 'root'
+        - name: MYSQL_USER
+          value: 'rangeradmin'
+        - name: MYSQL_PASSWORD
+          value: 'rangeradmin'
+        - name: MYSQL_DATABASE
+          value: 'ranger'
+        ports:
+        - containerPort: 3306
+          name: mysql
+        volumeMounts:
+        - name: custom-config
+          mountPath: /etc/mysql/conf.d/default-custom.cnf
+          subPath: mysql.custom.conf
+        resources:
+          limits:
+            cpu: 500m
+            memory: 500Mi
+      volumes:
+      - name: custom-config
+        configMap:
+          name: mysql-custom-config

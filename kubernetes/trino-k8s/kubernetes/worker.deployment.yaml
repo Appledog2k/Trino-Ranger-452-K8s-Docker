@@ -15,29 +15,32 @@ spec:
         app: trino-worker-dev
     spec:
       containers:
-        image: trinodb/trino:448
+      - image: trinodb/trino:451
         imagePullPolicy: IfNotPresent
         name: trino-worker-dev
         ports:
-        - containerPort: 8080
-          name: http
+        - name: http
+          containerPort: 8080
           protocol: TCP
-        resources: 
-          limits:
-            cpu: 1000m
-            memory: 2Gi
         volumeMounts:
         - mountPath: /etc/trino
-          name: config-volume
+          name: config-volume-dev
         - mountPath: /etc/trino/catalog
           name: catalog-volume
+        resources:
+          limits:
+            cpu: "1"
+            memory: "1Gi"
+          requests:
+            cpu: "500m"
+            memory: "512Mi"
       securityContext: 
         runAsUser: 0
       volumes:
       - configMap:
           defaultMode: 420
           name: trino-worker-dev-config-volume
-        name: config-volume
+        name: config-volume-dev
       - configMap:
           defaultMode: 420
           name: trino-catalog-dev-config-volume

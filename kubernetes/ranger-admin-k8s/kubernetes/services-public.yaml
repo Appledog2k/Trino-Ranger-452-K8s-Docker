@@ -1,12 +1,12 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: ranger-admin
+  name: ranger-admin-public
   labels:
     app: apache-ranger
     component: apache-ranger-admin
 spec:
-  type: LoadBalancer
+  type: NodePort
   ports:
     - port: 6080
       targetPort: http

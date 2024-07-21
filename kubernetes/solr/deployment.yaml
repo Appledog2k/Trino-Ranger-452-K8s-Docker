@@ -1,0 +1,50 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ranger-solr
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: ranger-solr
+  template:
+    metadata:
+      labels:
+        app: ranger-solr
+    spec:
+      containers:
+      - name: ranger-solr
+        image: ranger-solr:hungnq
+        ports:
+        - containerPort: 8983
+        volumeMounts:
+        - name: ranger-solr-config-elevate
+          mountPath: /opt/solr/server/solr/configsets/ranger_audits/conf/elevate.xml
+          subPath: elevate.xml
+        # - name: ranger-solr-config-managed-schema
+        #   mountPath: /opt/solr/server/solr/configsets/ranger_audits/conf/managed-schema.xml
+        #   subPath: managed-schema.xml
+        # - name: ranger-solr-config-solrconfig
+        #   mountPath: /opt/solr/server/solr/configsets/ranger_audits/conf/solrconfig.xml
+        #   subPath: solrconfig.xml
+        args:
+        - solr-precreate
+        - ranger_audits
+        - /opt/solr/server/solr/configsets/ranger_audits
+        resources:
+          limits:
+            cpu: 500m
+            memory: 1000Mi
+      volumes:
+      - name: ranger-solr-config-elevate
+        configMap:
+          defaultMode: 0777
+          name: ranger-solr-config-elevate
+      # - name: ranger-solr-config-managed-schema
+      #   configMap:
+      #     defaultMode: 0777
+      #     name: ranger-solr-config-managed-schema
+      # - name: ranger-solr-config-solrconfig
+      #   configMap:
+      #     defaultMode: 0777
+      #     name: ranger-solr-config-solrconfig

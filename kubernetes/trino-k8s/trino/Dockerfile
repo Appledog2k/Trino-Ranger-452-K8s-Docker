@@ -7,20 +7,15 @@ ENV RANGER_VERSION=ranger-2.4.0-trino-plugin
 ENV TAR_FILE=/root/${RANGER_VERSION}.tar.gz
 
 COPY install.properties /root/install.properties
+COPY jvm.config /etc/trino/jvm.config
 
-RUN mkdir -p /home/ranger/dist
-
-RUN chown -R "root:root" /data/trino && \
-    chown -R "root:root" /usr/bin/trino && \
-    chown -R "root:root" /usr/lib/trino && \
-    chown -R "root:root" /etc/trino
+RUN chmod -R 777 /etc/trino/jvm.config
+RUN chown -R "root:root" /etc/trino
 
 # Install necessary utilities
 RUN microdnf install gzip -y && \
     microdnf install dos2unix -y && \
     microdnf install findutils -y
-
-RUN echo $TRINO_PLUGIN_VERSION >> /home/ranger/dist/version
 
 RUN curl -k https://github.com/gympass/apache-ranger/releases/download/plugin-trino-452/${RANGER_VERSION}.tar.gz --output ${RANGER_VERSION}.tar.gz -L && \
     mkdir -p /root/${RANGER_VERSION} && \
@@ -30,6 +25,7 @@ RUN curl -k https://github.com/gympass/apache-ranger/releases/download/plugin-tr
 
 
 RUN chown "root:root" /root/${RANGER_VERSION}/*
+
 # Add entrypoint script
 COPY entrypoint.sh /root/entrypoint.sh
 RUN chmod +x /root/entrypoint.sh && \

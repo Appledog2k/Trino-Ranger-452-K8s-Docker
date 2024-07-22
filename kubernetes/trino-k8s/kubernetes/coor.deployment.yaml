@@ -15,7 +15,7 @@ spec:
         app: trino-coordinator-dev
     spec:
       containers:
-      - image: ranger-trino:dev4
+      - image: ranger-trino:dev6
         imagePullPolicy: IfNotPresent
         name: trino-coordinator-dev
         ports:
@@ -26,34 +26,26 @@ spec:
           limits:
             cpu: 1000m
             memory: 1Gi
-        # volumeMounts:
-        # - mountPath: /etc/trino
-        #   name: config-volume
-        # - mountPath: /etc/trino/catalog
-        #   name: catalog-volume
-        # - mountPath: /opt/security/password.db
-        #   name: password-secret
-        #   readOnly: true
-        #   subPath: password.db
-        # - mountPath: /opt/security/group.txt
-        #   name: password-secret
-        #   readOnly: true
-        #   subPath: group.txt
-        # - mountPath: /opt/security/rules.json
-        #   name: password-secret
-        #   readOnly: true
-        #   subPath: rules.json
-      # restartPolicy: Always
-      # restartCount: 1
+        volumeMounts:
+        - mountPath: /etc/trino/config.properties
+          name: config-coordinator
+          subPath: config.properties
+        - mountPath: /etc/trino/log.properties
+          name: config-coordinator
+          subPath: log.properties
+        - mountPath: /etc/trino/node.properties
+          name: config-coordinator
+          subPath: node.properties
+        - mountPath: /etc/trino/catalog
+          name: catalog-volume
+      restartPolicy: Always
       securityContext: 
         runAsUser: 0
         runAsGroup: 0
-      # volumes:
-      # - configMap:
-      #     defaultMode: 0777
-      #     name: trino-coordinator-dev-config-volume
-      #   name: config-volume
-      # - name: password-secret
-      #   secret:
-      #     defaultMode: 420
-      #     secretName: trino-secrets
+      volumes:
+      - configMap:
+          name: trino-coordinator-dev-config-volume
+        name: config-coordinator
+      - configMap:
+          name: trino-catalog-dev-config-volume
+        name: catalog-volume

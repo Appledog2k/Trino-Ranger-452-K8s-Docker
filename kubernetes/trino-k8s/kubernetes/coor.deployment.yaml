@@ -15,9 +15,12 @@ spec:
         app: trino-coordinator-dev
     spec:
       containers:
-      - image: ranger-trino:dev6
+      - image: ranger-trino:k8s
         imagePullPolicy: IfNotPresent
         name: trino-coordinator-dev
+        # env:
+        # - name: JAVA_OPTS
+        #   value: "-Xmx4G"
         ports:
         - containerPort: 8080
           name: http

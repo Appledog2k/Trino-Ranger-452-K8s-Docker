@@ -19,7 +19,7 @@ spec:
     spec:
       containers:
         - name: apache-ranger-admin
-          image: ranger:dev
+          image: ranger:k8s
           imagePullPolicy: IfNotPresent
           resources:
             limits:

@@ -8,6 +8,7 @@ data:
     node-scheduler.include-coordinator=true
     http-server.http.port=8080
     discovery.uri=http://localhost:8080
+    catalog.management=dynamic
   # exchange-manager.properties: |-
   #   exchange-manager.name=filesystem
   #   exchange.base-directories=/tmp/trino-local-file-system-exchange-manager

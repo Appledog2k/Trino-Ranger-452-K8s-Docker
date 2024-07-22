@@ -9,9 +9,8 @@ ENV TAR_FILE=/root/${RANGER_VERSION}.tar.gz
 COPY install.properties /root/install.properties
 COPY jvm.config /etc/trino/jvm.config
 
-RUN chmod -R 777 /etc/trino/jvm.config
-RUN chown -R "root:root" /etc/trino
-
+# Thiết lập quyền truy cập cho thư mục và tệp cấu hình
+RUN chmod -R 777 /etc/trino 
 # Install necessary utilities
 RUN microdnf install gzip -y && \
     microdnf install dos2unix -y && \

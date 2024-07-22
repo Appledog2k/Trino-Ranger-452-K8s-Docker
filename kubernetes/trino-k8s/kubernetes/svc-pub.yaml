@@ -1,11 +1,11 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: ranger-trino
+  name: ranger-trino1
   labels:
     app: trino-coordinator-dev
 spec:
-  type: ClusterIP
+  type: NodePort
   ports:
     - name: http
       port: 8080

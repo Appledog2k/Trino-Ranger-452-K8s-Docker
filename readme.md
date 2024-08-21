@@ -1,4 +1,0 @@
-### Ranger + Trino
-
-#### Tổng quan
-- 
